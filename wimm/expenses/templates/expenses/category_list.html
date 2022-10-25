@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+{% load mathfilters %}
+
+{% block content %}
+
+<form method="get" action="">
+    {{ form.as_p }}
+    <button type="submit">confirm</button>
+</form>
+
+<h2>{{ display_budget }}</h2>
+
+<table>
+    <th>
+        <tr>
+            <th>Category</th>
+            <th>Limit</th>
+            <th>Spent</th>
+            <th>Available</th>
+            <th>Edit</th>
+        </tr>
+    </th>
+    <tbody>
+        {% for object in object_list %}
+        <tr>
+            <td>{{ object.category_name }}</td>
+            <td>{{ object.limit }}</td>
+            <td>{{ object.spent }}</td>
+            <td>{{ object.limit|sub:object.spent }}</td>
+            <td>
+                <a href="{% url 'expenses-edit' object.id %}">edit</a>
+		        <a href="{% url 'expenses-delete' object.id %}">delete</a>
+            </td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td>-</td>
+        </tr>
+        {% endfor %}
+        <tr>
+            <td></td>
+            <td>{{ total_limit|floatformat:2 }}</td>
+            <td>{{ total_spent|floatformat:2 }}</td>
+            <td>{{ total_limit|sub:total_spent|floatformat:2 }}</td>
+            <td></td>
+        </tr>
+    </tbody>
+</table>
+
+<p>
+    Income: {{ display_budget.income }}
+</p>
+<p>
+    Savings: 
+    {% if total_spent %}
+        {{ display_budget.income|sub:total_spent }}
+    {% else %}
+        {{ display_budget.income }}
+    {% endif %}
+</p>
+
+{% endblock %}
