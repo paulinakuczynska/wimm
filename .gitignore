@@ -1,4 +1,5 @@
 venv/
+.vscode/
 wimm/db.sqlite3
 wimm/wimm/__pycache__/
 wimm/expenses/__pycache__/

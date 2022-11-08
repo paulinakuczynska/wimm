@@ -17,7 +17,7 @@
             <th>Limit</th>
             <th>Spent</th>
             <th>Available</th>
-            <th>Edit</th>
+            <th>Action</th>
         </tr>
     </th>
     <tbody>
@@ -28,6 +28,7 @@
             <td>{{ object.spent }}</td>
             <td>{{ object.limit|sub:object.spent }}</td>
             <td>
+                <a href="{% url 'expenses-spent' object.id %}">spent</a>
                 <a href="{% url 'expenses-edit' object.id %}">edit</a>
 		        <a href="{% url 'expenses-delete' object.id %}">delete</a>
             </td>
@@ -47,6 +48,14 @@
     </tbody>
 </table>
 
+<p>
+    <a href="{% url 'expenses-create' %}">add category</a>
+</p>
+<p>
+    <a href="{% url 'expenses-create-budget' %}">add budget</a>
+    <a href="{% url 'expenses-edit-budget' display_budget.id %}">edit budget</a>
+    <a href="{% url 'expenses-delete-budget' display_budget.id %}">delete budget</a>
+</p>
 <p>
     Income: {{ display_budget.income }}
 </p>

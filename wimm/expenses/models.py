@@ -15,3 +15,9 @@ class Category(models.Model):
 
     def __str__(self) -> str:
         return f'{self.category_name}'
+    
+    def save(self, *args, **kwargs):
+        if self.id:
+            last_spent = Category.objects.get(id=self.id)
+            self.spent = last_spent.spent + self.spent
+        super(Category, self).save(*args, **kwargs)
